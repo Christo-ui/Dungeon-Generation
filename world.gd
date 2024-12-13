@@ -2,9 +2,9 @@ extends Node3D
 
 var Map : Array
 var VisualMap : Array
-var Size = 35
+var Size = 50
 var VisualSize = Size * 2
-var Rooms = 1
+var Rooms = 10
 var RoomMax = 8
 var RoomMin = 5
 var arrValidDir : Array = [false, false, false, false]
@@ -326,11 +326,12 @@ func FindRoomConnectors():
 			checkDir[0] = MoveDirection[1] * 2
 			checkDir[1] = MoveDirection[0] * -2
 			
+			var RoomConnectionPoints
 			# moves to next point and looks for connection points
 			for j in Difference[DifIndex] + 1:
-				if VisualMap[CurrentX + MoveDirection[0] * j + checkDir[0]][CurrentY + MoveDirection[1] * j + checkDir[1]] == 1:
+				if VisualMap[CurrentX + MoveDirection[0] * j + checkDir[0]][CurrentY + MoveDirection[1] * j + checkDir[1]] == 1 or VisualMap[CurrentX + MoveDirection[0] * j + checkDir[0]][CurrentY + MoveDirection[1] * j + checkDir[1]] == 2:
 					print('connection point at: ' + str(CurrentX + MoveDirection[1] * j + checkDir[0]) + ';' + str(CurrentY + MoveDirection[0] * j + checkDir[1]))
-					VisualMap[CurrentX + MoveDirection[0] * j][CurrentY + MoveDirection[1] * j] = 5
+					VisualMap[CurrentX + MoveDirection[0] * j + checkDir[0] / 2][CurrentY + MoveDirection[1] * j + checkDir[1] / 2] = 5
 			#VisualMap[CurrentX][CurrentY] = 5
 		
 		# place connection
