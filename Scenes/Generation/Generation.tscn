@@ -99,4 +99,6 @@ text = "Generate Map"
 [node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, -1)
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.105934, 0.994373, 0, -0.994373, 0.105934, 0, 14.7343, 0)
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Generate" to="." method="_on_generate_pressed"]
