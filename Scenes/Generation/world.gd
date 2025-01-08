@@ -32,9 +32,10 @@ func _ready() -> void:
 	#add_child(room_instance)
 	
 	#get_node("test").position.y = -1
-	InitializeMap()
+	#InitializeMap()
 	
-	CurrentNode.set_text(0, '1;1')
+	#CurrentNode.set_text(0, '1;1')
+	pass
 
 func InitializeMap():
 	PosX = 1
@@ -119,6 +120,9 @@ func PlaceRooms():
 		counter += 1
 
 func BuildMaze():
+	#PosX = 1
+	#PosY = 1
+	#Map[PosX][PosY] = 1
 	tree.free()
 	tree = Tree.new()
 	Root = tree.create_item()
@@ -176,6 +180,9 @@ func MovePoint():
 		
 		prevMove = arrChooseMove[MoveIndex]
 		
+		Map[PosX][PosY] = 1
+		VisualMap[PosX * SizeInc][PosY * SizeInc] = 1
+		
 		if arrChooseMove[MoveIndex] == 0:
 			PosY += 1
 		
@@ -206,15 +213,18 @@ func MovePoint():
 			for i in Size:
 				for k in Size:
 					if Map[i][k] == 4:
-						tree.queue_free()
-						
-						tree = Tree.new()
-						Root = tree.create_item()
-						CurrentNode = Root
-						
-						CurrentNode.set_text(0, str(i) + ';' + str(k))
 						PosX = i
 						PosY = k
+						#Map[PosX][PosY] = 1
+						tree.free()
+						tree = Tree.new()
+						Root = tree.create_item()
+						Root.set_text(0, str(PosX) + ';' + str(PosY))
+						CurrentNode = Root
+						#CurrentNode.set_text(0, str(PosX) + ';' + str(PosY))
+						
+						#Root.set_text(0, str(PosX) + ';' + str(PosY))
+						#CurrentNode = Root
 						
 						getValidDirection()
 						#this is so that it doesnt loop forever if there arent any valid directions
@@ -226,6 +236,7 @@ func MovePoint():
 						if len(arrCheckMove) != 0:
 							populated = false
 							print('isolated: ' + str(PosX) + ':' + str(PosY))
+							
 							break
 						else:
 							print('single')
@@ -463,8 +474,6 @@ func _on_generate_pressed():
 	RoomMin = $CanvasLayer/Control/MarginContainer/VBoxContainer/RoomMin.currentvalue
 	RoomMax = $CanvasLayer/Control/MarginContainer/VBoxContainer/RoomMax.currentvalue
 	VisualSize = Size * SizeInc
-	PosX = 1
-	PosY = 1
 	$CanvasLayer/Control/Camera3D.position.y = VisualSize * 1.3
 	
 	InitializeMap()
