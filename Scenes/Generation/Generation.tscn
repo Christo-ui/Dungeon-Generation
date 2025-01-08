@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3 uid="uid://droyp4o1781yt"]
+
+[ext_resource type="Script" path="res://Scenes/Generation/world.gd" id="1_7p84h"]
+[ext_resource type="MeshLibrary" uid="uid://frf7gv1swlqj" path="res://Meshlib/Dungeon_Gray_Tiles.tres" id="2_lc23m"]
+[ext_resource type="Script" path="res://Scenes/Generation/MenuScript.gd" id="3_88x4s"]
+[ext_resource type="PackedScene" uid="uid://d0mgis7f2smcc" path="res://Scenes/Menu/Buttons/Slider.tscn" id="4_tmfc1"]
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_7p84h")
+SizeInc = 3
+
+[node name="Tiles" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh_library = ExtResource("2_lc23m")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_88x4s")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="lblTitle" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 40
+text = "Settings:"
+
+[node name="MapSize" parent="CanvasLayer/Control/MarginContainer/VBoxContainer" instance=ExtResource("4_tmfc1")]
+layout_mode = 2
+min = 20
+currentvalue = 30
+title = "Map Size"
+
+[node name="NodeSize" parent="CanvasLayer/Control/MarginContainer/VBoxContainer" instance=ExtResource("4_tmfc1")]
+layout_mode = 2
+min = 2
+max = 10
+currentvalue = 2
+title = "Distance Between Nodes"
+
+[node name="RoomAttempts" parent="CanvasLayer/Control/MarginContainer/VBoxContainer" instance=ExtResource("4_tmfc1")]
+layout_mode = 2
+min = 10
+max = 300
+currentvalue = 200
+title = "Room Attempts"
+
+[node name="RoomMin" parent="CanvasLayer/Control/MarginContainer/VBoxContainer" instance=ExtResource("4_tmfc1")]
+layout_mode = 2
+min = 2
+max = 20
+currentvalue = 5
+title = "Min Room Width"
+
+[node name="RoomMax" parent="CanvasLayer/Control/MarginContainer/VBoxContainer" instance=ExtResource("4_tmfc1")]
+layout_mode = 2
+min = 5
+max = 30
+currentvalue = 8
+title = "Max Room Width"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="chkDeadends" type="CheckBox" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Clean deadends"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Generate" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Generate Map"
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Control"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, -1)
+
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/Generate" to="." method="_on_generate_pressed"]

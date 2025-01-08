@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Rogue Wizards"
-run/main_scene="res://Scenes/Levels/title_screen.tscn"
+config/name="Dungeon Generation"
+run/main_scene="res://Scenes/Generation/Generation.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[debug]
+
+gdscript/warnings/integer_division=0
 
 [dotnet]
 
